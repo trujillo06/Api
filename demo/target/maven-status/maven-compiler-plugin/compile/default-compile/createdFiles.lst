@@ -1,0 +1,7 @@
+com\movil\demo\controller\AuthController.class
+com\movil\demo\DemoApplication.class
+com\movil\demo\security\JwtUtil.class
+com\movil\demo\model\Usuario.class
+com\movil\demo\security\SecurityConfig.class
+com\movil\demo\repository\UsuarioRepository.class
+com\movil\demo\service\UsuarioService.class

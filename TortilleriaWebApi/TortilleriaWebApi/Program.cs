@@ -35,13 +35,11 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 builder.Services.AddScoped<AuthService>();
 builder.Services.AddSingleton<JwtHelper>();
 
-// Add services to the container.
 // Configurar controladores
 builder.Services.AddControllers();
 
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+// Configurar Swagger con autenticación JWT
 builder.Services.AddEndpointsApiExplorer();
-// 🔹 Configurar Swagger con autenticación JWT
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "Tortilleria API", Version = "v1" });
@@ -68,9 +66,13 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
+// 🔹 Configuración para escuchar en cualquier IP (IMPORTANTE)
+builder.WebHost.UseKestrel()
+    .UseUrls("http://0.0.0.0:5035"); // Cambia el puerto si es necesario
+
 var app = builder.Build();
 
-// 🔹 Configuración de CORS (permitir solicitudes desde cualquier origen)
+// Configuración de CORS (permitir solicitudes desde cualquier origen)
 app.UseCors(policy => policy.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 
 app.UseHttpsRedirection();
@@ -79,7 +81,7 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-// Configure the HTTP request pipeline.
+// Configuración de Swagger
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -89,11 +91,5 @@ if (app.Environment.IsDevelopment())
         c.RoutePrefix = "";
     });
 }
-
-app.UseHttpsRedirection();
-
-app.UseAuthorization();
-
-app.MapControllers();
 
 app.Run();

@@ -7,18 +7,18 @@ namespace TortilleriaMovilApi.Models
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
+        public int id_usuario { get; set; }
 
         [Required, MaxLength(100)]
-        public string Nombre { get; set; }
+        public string nombre { get; set; }
 
         [Required, EmailAddress]
-        public string Correo { get; set; }
+        public string correo { get; set; }
 
         [Required]
-        public string Contraseña { get; set; }
+        public string password { get; set; }
 
         [Required]
-        public int Rol { get; set; }
+        public int rol { get; set; }
     }
 }

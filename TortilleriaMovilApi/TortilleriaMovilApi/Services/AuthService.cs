@@ -18,15 +18,15 @@ namespace TortilleriaMovilApi.Services
 
         public async Task<bool> RegisterAsync(UserRegisterDto request)
         {
-            if (await _context.Usuarios.AnyAsync(u => u.Correo == request.Correo))
+            if (await _context.Usuarios.AnyAsync(u => u.correo == request.correo))
                 return false;
 
             var user = new Usuario
             {
-                Nombre = request.Nombre,
-                Correo = request.Correo,
-                Contraseña = BCrypt.Net.BCrypt.HashPassword(request.Contraseña),
-                Rol = request.Rol
+                nombre = request.nombre,
+                correo = request.correo,
+                password = BCrypt.Net.BCrypt.HashPassword(request.password),
+                rol = request.rol
             };
 
             _context.Usuarios.Add(user);
@@ -36,8 +36,8 @@ namespace TortilleriaMovilApi.Services
 
         public async Task<string> LoginAsync(UserLoginDto request)
         {
-            var user = await _context.Usuarios.FirstOrDefaultAsync(u => u.Correo == request.Correo);
-            if (user == null || !BCrypt.Net.BCrypt.Verify(request.Contraseña, user.Contraseña))
+            var user = await _context.Usuarios.FirstOrDefaultAsync(u => u.correo == request.correo);
+            if (user == null || !BCrypt.Net.BCrypt.Verify(request.password, user.password))
                 return null;
 
             return JwtHelper.GenerateToken(user);

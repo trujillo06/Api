@@ -11,9 +11,9 @@ namespace TortilleriaMovilApi.Data
         public DbSet<Usuario> Usuarios { get; set; }
         public DbSet<Roles> Roles { get; set; }
 
-        internal Task SaveChangesAsync()
+        public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
-            throw new NotImplementedException();
+            return base.SaveChangesAsync(cancellationToken);
         }
     }
 }

@@ -12,43 +12,47 @@ var connectionString = builder.Configuration.GetConnectionString("MySQLConnectio
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
 
+// Clave secreta para JWT - Debe ser la misma que en JwtHelper.cs
+const string secretKey = "Esta_Clave_Secreta_Es_Suficientemente_Larga_Para_HMAC_SHA256";
+var key = Encoding.ASCII.GetBytes(secretKey);
+
 // Configurar autenticación con JWT
-var key = Encoding.ASCII.GetBytes("Torti_Oss");
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-    .AddJwtBearer(options =>
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+.AddJwtBearer(options =>
+{
+    options.RequireHttpsMetadata = false;
+    options.SaveToken = true;
+    options.TokenValidationParameters = new TokenValidationParameters
     {
-        options.RequireHttpsMetadata = false;
-        options.SaveToken = true;
-        options.TokenValidationParameters = new TokenValidationParameters
-        {
-            ValidateIssuerSigningKey = true,
-            IssuerSigningKey = new SymmetricSecurityKey(key),
-            ValidateIssuer = false,
-            ValidateAudience = false
-        };
-    });
-// Add services to the container.
+        ValidateIssuerSigningKey = true,
+        IssuerSigningKey = new SymmetricSecurityKey(key),
+        ValidateIssuer = false,
+        ValidateAudience = false
+    };
+});
+
+// Agregar servicios al contenedor
 builder.Services.AddScoped<AuthService>();
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// Configuración del pipeline HTTP
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
 
-app.UseAuthentication();
-
 app.UseHttpsRedirection();
-
-app.UseAuthorization();
-
+app.UseAuthentication();  // Primero autenticación
+app.UseAuthorization();   // Luego autorización
 app.MapControllers();
 
 app.Run();

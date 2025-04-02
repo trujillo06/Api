@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("TortilleriaMovilApi")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7a6e53aa300baecc6261224bfcc330bb2c549af0")]
 [assembly: System.Reflection.AssemblyProductAttribute("TortilleriaMovilApi")]
 [assembly: System.Reflection.AssemblyTitleAttribute("TortilleriaMovilApi")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

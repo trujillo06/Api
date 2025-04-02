@@ -24,7 +24,7 @@ namespace TortilleriaWebApi.Utils
             var claims = new[]
             {
                 new Claim(JwtRegisteredClaimNames.Sub, correo),
-                new Claim("userId", userId.ToString()),
+                new Claim("id_usuario", userId.ToString()),
                 new Claim("rol", rol.ToString()),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
             };

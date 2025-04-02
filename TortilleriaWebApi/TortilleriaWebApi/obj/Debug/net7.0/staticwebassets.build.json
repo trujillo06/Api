@@ -1,11 +1,12 @@
 {
   "Version": 1,
-  "Hash": "iqoD//d+llkk0lrccxxvHvWAeIyvbL204ElQKl3Gj0A=",
+  "Hash": "Ib/5hr7nETBki+hRNC05HcPxduEWiz8poDuTv2peOY8=",
   "Source": "TortilleriaWebApi",
   "BasePath": "_content/TortilleriaWebApi",
   "Mode": "Default",
   "ManifestType": "Build",
   "ReferencedProjectsConfiguration": [],
   "DiscoveryPatterns": [],
-  "Assets": []
+  "Assets": [],
+  "Endpoints": []
 }

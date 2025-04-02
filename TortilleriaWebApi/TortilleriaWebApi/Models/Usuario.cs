@@ -6,22 +6,22 @@ namespace TortilleriaWebApi.Models
     public class Usuario
     {
         [Key]
-        public int Id_Usuario { get; set; }
+        public int id_usuario { get; set; }
 
         [Required]
         [StringLength(100)]
-        public string Nombre { get; set; }
+        public string nombre { get; set; }
 
         [Required]
         [EmailAddress]
-        public string Correo { get; set; }
+        public string correo { get; set; }
 
         [Required]
-        public string Contraseña { get; set; }
+        public string password { get; set; }
 
-        public DateTime Fecha_Registro { get; set; } = DateTime.UtcNow;
+        public DateTime fecha_registro { get; set; } = DateTime.UtcNow;
 
         [ForeignKey("Rol")]
-        public int Rol { get; set; }
+        public int rol { get; set; }
     }
 }

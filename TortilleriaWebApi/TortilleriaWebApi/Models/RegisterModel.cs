@@ -5,16 +5,16 @@ namespace TortilleriaWebApi.Models
     public class RegisterModel
     {
         [Required]
-        public string Nombre { get; set; }
+        public string nombre { get; set; }
 
         [Required]
         [EmailAddress]
-        public string Correo { get; set; }
+        public string correo { get; set; }
 
         [Required]
         [MinLength(6)]
-        public string Contraseña { get; set; }
+        public string password { get; set; }
 
-        public int Rol { get; set; } = 1; // Rol por defecto
+        public int rol { get; set; } = 1; // Rol por defecto
     }
 }

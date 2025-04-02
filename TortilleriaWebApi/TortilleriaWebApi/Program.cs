@@ -43,7 +43,6 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "Tortilleria API", Version = "v1" });
-
     var securityScheme = new OpenApiSecurityScheme
     {
         Name = "Authorization",
@@ -58,7 +57,6 @@ builder.Services.AddSwaggerGen(c =>
             Id = "Bearer"
         }
     };
-
     c.AddSecurityDefinition("Bearer", securityScheme);
     c.AddSecurityRequirement(new OpenApiSecurityRequirement
     {
@@ -66,30 +64,28 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
-// 🔹 Configuración para escuchar en cualquier IP (IMPORTANTE)
-builder.WebHost.UseKestrel()
-    .UseUrls("http://0.0.0.0:5035"); // Cambia el puerto si es necesario
+// Configurar URLs y puertos para escuchar
+builder.WebHost.ConfigureKestrel(serverOptions =>
+{
+    serverOptions.ListenAnyIP(8080); // Escuchar en el puerto 8080 en todas las interfaces de red
+});
 
 var app = builder.Build();
 
 // Configuración de CORS (permitir solicitudes desde cualquier origen)
 app.UseCors(policy => policy.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 
+// Configuración de Swagger - siempre disponible independientemente del entorno
+app.UseSwagger();
+app.UseSwaggerUI(c =>
+{
+    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Tortilleria API V1");
+    c.RoutePrefix = "";
+});
+
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
-
 app.MapControllers();
-
-// Configuración de Swagger
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI(c =>
-    {
-        c.SwaggerEndpoint("/swagger/v1/swagger.json", "Tortilleria API V1");
-        c.RoutePrefix = "";
-    });
-}
 
 app.Run();

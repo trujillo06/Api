@@ -20,15 +20,15 @@ namespace TortilleriaWebApi.Services
 
         public async Task<string> Register(RegisterModel model)
         {
-            if (await _context.Usuarios.AnyAsync(u => u.Correo == model.Correo))
+            if (await _context.Usuarios.AnyAsync(u => u.correo == model.correo))
                 return "El correo ya está registrado.";
 
             var usuario = new Usuario
             {
-                Nombre = model.Nombre,
-                Correo = model.Correo,
-                Contraseña = HashPassword(model.Contraseña),
-                Rol = model.Rol
+                nombre = model.nombre,
+                correo = model.correo,
+                password = HashPassword(model.password),
+                rol = model.rol
             };
 
             _context.Usuarios.Add(usuario);
@@ -38,11 +38,26 @@ namespace TortilleriaWebApi.Services
 
         public async Task<string> Login(LoginModel model)
         {
-            var usuario = await _context.Usuarios.FirstOrDefaultAsync(u => u.Correo == model.Correo);
-            if (usuario == null || !VerifyPassword(model.Contraseña, usuario.Contraseña))
-                return "Credenciales inválidas.";
+            Console.WriteLine($"Intentando iniciar sesión con: {model.correo}");
 
-            return _jwtHelper.GenerateToken(usuario.Correo, usuario.Id_Usuario, usuario.Rol);
+            var usuario = await _context.Usuarios.FirstOrDefaultAsync(u => u.correo == model.correo);
+
+            if (usuario == null)
+            {
+                Console.WriteLine("Usuario no encontrado en la base de datos.");
+                return "Credenciales inválidas.";
+            }
+
+            Console.WriteLine($"Usuario encontrado: {usuario.correo} - {usuario.password}");
+
+            if (!VerifyPassword(model.password, usuario.password))
+            {
+                Console.WriteLine("Contraseña incorrecta.");
+                return "Credenciales inválidas.";
+            }
+
+            Console.WriteLine("Inicio de sesión exitoso.");
+            return _jwtHelper.GenerateToken(usuario.correo, usuario.id_usuario, usuario.rol);
         }
 
         private string HashPassword(string password)

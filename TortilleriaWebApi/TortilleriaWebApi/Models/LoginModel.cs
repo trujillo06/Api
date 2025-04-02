@@ -6,9 +6,9 @@ namespace TortilleriaWebApi.Models
     {
         [Required]
         [EmailAddress]
-        public string Correo { get; set; }
+        public string correo { get; set; }
 
         [Required]
-        public string Contraseña { get; set; }
+        public string password { get; set; }
     }
 }

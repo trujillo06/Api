@@ -67,7 +67,7 @@ builder.Services.AddSwaggerGen(c =>
 // Configurar URLs y puertos para escuchar
 builder.WebHost.ConfigureKestrel(serverOptions =>
 {
-    serverOptions.ListenAnyIP(8080); // Escuchar en el puerto 8080 en todas las interfaces de red
+    serverOptions.ListenAnyIP(5001); // Escuchar en el puerto 8080 en todas las interfaces de red
 });
 
 var app = builder.Build();

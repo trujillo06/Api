@@ -8,7 +8,7 @@ using TortilleriaMovilApi.Services;
 var builder = WebApplication.CreateBuilder(args);
 
 // Configuración del puerto personalizado (7035)
-builder.WebHost.UseUrls("http://*:7035", "https://*:7035");
+builder.WebHost.UseUrls("http://*:5002", "https://*:5002");
 
 // Configuración de CORS para permitir acceso desde cualquier origen
 builder.Services.AddCors(options =>
@@ -75,8 +75,8 @@ app.UseAuthorization();   // Luego autorización
 
 app.MapControllers();
 
-Console.WriteLine($"Aplicación ejecutándose en: http://localhost:7035");
-Console.WriteLine($"IP local: http://{System.Net.Dns.GetHostName()}:7035");
-Console.WriteLine($"Swagger disponible en: http://localhost:7035/swagger");
+Console.WriteLine($"Aplicación ejecutándose en: http://localhost:5002");
+Console.WriteLine($"IP local: http://{System.Net.Dns.GetHostName()}:5002");
+Console.WriteLine($"Swagger disponible en: http://localhost:5002/swagger");
 
 app.Run();

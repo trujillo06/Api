@@ -6,6 +6,13 @@ using TortilleriaMovilApi.Data;
 using TortilleriaMovilApi.Services;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// Configurar Kestrel para usar solo IPv4 en el puerto 5050
+builder.WebHost.ConfigureKestrel(options =>
+{
+    options.Listen(System.Net.IPAddress.Any, 5050); // Solo IPv4
+});
+
 builder.WebHost.UseUrls("http://*:5050", "https://*:5050");
 
 // Configuración de CORS para permitir acceso desde cualquier origen
